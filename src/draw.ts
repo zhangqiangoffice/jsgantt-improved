@@ -650,6 +650,9 @@ export const GanttChart = function (pDiv, pFormat) {
             newNode(vTmpDiv2, 'div', this.vDivId + 'complete_' + vID, this.vTaskList[i].getClass() + 'complete', null, this.vTaskList[i].getCompStr());
           }
 
+          //Delays
+          newNode(vTmpDiv, 'div', this.vDivId + 'delaydiv_' + vID, 'gtaskred', null, 100);
+
           // caption
           if (vComb) vTmpItem = this.vTaskList[i].getParItem();
           if (!vComb || (vComb && this.vTaskList[i].getParItem().getEnd() == this.vTaskList[i].getEnd())) vCaptClass = 'gcaption';
