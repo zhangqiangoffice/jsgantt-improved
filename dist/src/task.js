@@ -224,6 +224,30 @@ exports.TaskItem = function (pID, pName, pStart, pEnd, pClass, pLink, pMile, pRe
     };
     this.getPlanStart = function () { return vPlanStart ? vPlanStart : vStart; };
     this.getPlanEnd = function () { return vPlanEnd ? vPlanEnd : vEnd; };
+    this.getDelayStart = function () {
+        if (vStart && vPlanEnd && vStart.getTime() > vPlanEnd.getTime()) {
+            return vStart;
+        }
+        if (vEnd && vPlanEnd && vEnd.getTime() > vPlanEnd.getTime()) {
+            return vPlanEnd;
+        }
+        if (!vEnd && vStart && vPlanEnd && vStart.getTime() < vPlanEnd.getTime() && vPlanEnd.getTime() < new Date().getTime()) {
+            return vPlanEnd;
+        }
+        return null;
+    };
+    this.getDelayEnd = function () {
+        if ((vStart && vPlanEnd && vStart.getTime() > vPlanEnd.getTime())) {
+            return vEnd || new Date();
+        }
+        if (vEnd && vPlanEnd && vEnd.getTime() > vPlanEnd.getTime()) {
+            return vEnd;
+        }
+        if (!vEnd && vStart && vPlanEnd && vStart.getTime() < vPlanEnd.getTime() && vPlanEnd.getTime() < new Date().getTime()) {
+            return new Date();
+        }
+        return null;
+    };
     this.getCost = function () { return vCost; };
     this.getGroupMinStart = function () { return vGroupMinStart; };
     this.getGroupMinEnd = function () { return vGroupMinEnd; };
